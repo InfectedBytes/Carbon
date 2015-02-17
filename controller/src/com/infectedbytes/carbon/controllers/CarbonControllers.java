@@ -138,6 +138,7 @@ public class CarbonControllers {
 	/**
 	 * Removes a {@link WrapperFactory}. Mostly used to remove a default factory, like the XBox360 or Ipega classes.
 	 * 
+	 * @param <T>
 	 * @param factory
 	 */
 	public static <T extends WrapperFactory> void removeFactory(Class<T> factory) {

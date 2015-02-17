@@ -38,7 +38,7 @@ public abstract class ControllerWrapper implements CarbonController, ControllerL
 	}
 
 	/**
-	 * @return the LibGDX {@link Controller] instance of this wrapper.
+	 * @return the LibGDX {@link Controller} instance of this wrapper.
 	 */
 	public Controller getController() {
 		return baseController;

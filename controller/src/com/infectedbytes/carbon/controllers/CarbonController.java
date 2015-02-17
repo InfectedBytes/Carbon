@@ -4,8 +4,8 @@ import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
 
 /**
- * Represents a connected controller. Provides methods to query the state of {@link CarbonKey}, {@link CarbonAxis}, {@link CarbonVector}
- * and a POV on the controller. Additionally one can check if those components are supported by this controller via the different
+ * Represents a connected controller. Provides methods to query the state of {@link CarbonKey}, {@link CarbonAxis}, {@link CarbonVector} and
+ * a POV on the controller. Additionally one can check if those components are supported by this controller via the different
  * {@code supports(...)}-methods. Multiple {@link CarbonControllerListener} instances can be registered with the Controller to receive
  * events in case the controller's state changes. Listeners will be invoked on the rendering thread.
  * 
@@ -57,17 +57,16 @@ public interface CarbonController {
 	 */
 	public boolean supports(CarbonKey key);
 	/**
-	 * @param key
+	 * @param axis
 	 * @return whether the {@link CarbonAxis} is supported by this controller.
 	 */
 	public boolean supports(CarbonAxis axis);
 	/**
-	 * @param key
+	 * @param vector
 	 * @return whether the {@link CarbonVector} is supported by this controller.
 	 */
 	public boolean supports(CarbonVector vector);
 	/**
-	 * @param key
 	 * @return whether this controller has a POV.
 	 */
 	public boolean supportsPov();
