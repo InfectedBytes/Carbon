@@ -13,4 +13,4 @@ The axisCode 0 ist mapped to the Y-axis of the left analogstick on a XBox360 Con
 A CarbonController checks which kind of controller is used and remaps it, so you can always use the same mapping, independent of the real mapping. In the above example, you wold use CarbonAxis.LX and CarbonAxis.LY to get on each device the specified axis. 
 
 For more information look at the [wiki](https://github.com/InfectedBytes/Carbon/wiki/CarbonController). 
-If you want to try it out, her's the [download](http://files.infectedbytes.com/carbon/carbon-controller-1.0.jar).
+If you want to try it out, here's the [download](http://files.infectedbytes.com/carbon/carbon-controller-1.0.jar).
