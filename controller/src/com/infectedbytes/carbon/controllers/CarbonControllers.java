@@ -11,6 +11,7 @@ import com.infectedbytes.carbon.controllers.wrapper.FallbackController;
 import com.infectedbytes.carbon.controllers.wrapper.IpegaAndroid;
 import com.infectedbytes.carbon.controllers.wrapper.IpegaPC;
 import com.infectedbytes.carbon.controllers.wrapper.Ouya;
+import com.infectedbytes.carbon.controllers.wrapper.SpaceMousePro;
 import com.infectedbytes.carbon.controllers.wrapper.WrapperFactory;
 import com.infectedbytes.carbon.controllers.wrapper.XBox360;
 
@@ -37,6 +38,7 @@ public class CarbonControllers {
 		factories.add(new IpegaPC());
 		factories.add(new IpegaAndroid());
 		factories.add(new Ouya());
+		factories.add(new SpaceMousePro());
 	}
 
 	private static void init() {

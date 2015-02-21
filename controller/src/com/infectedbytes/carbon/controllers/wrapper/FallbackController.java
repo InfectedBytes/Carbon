@@ -27,7 +27,7 @@ public class FallbackController implements WrapperFactory {
 				CarbonKey.A, CarbonKey.B, CarbonKey.X, CarbonKey.Y, CarbonKey.L1, CarbonKey.R1,
 				CarbonKey.BACK, CarbonKey.START, CarbonKey.L2, CarbonKey.R2, CarbonKey.L3, CarbonKey.R3};
 		private CarbonAxis[] axisMapping = new CarbonAxis[] {
-				CarbonAxis.LY, CarbonAxis.LX, CarbonAxis.RY, CarbonAxis.RX, CarbonAxis.LT, CarbonAxis.RT};
+				CarbonAxis.LY, CarbonAxis.LX, CarbonAxis.RY, CarbonAxis.RX, CarbonAxis.LT, CarbonAxis.RT, CarbonAxis.LZ, CarbonAxis.RZ};
 
 		public Wrapper(Controller controller) {
 			super(controller);
@@ -56,7 +56,7 @@ public class FallbackController implements WrapperFactory {
 		}
 		@Override
 		public boolean axisMoved(Controller controller, int axisIndex, float value) {
-			if (axisIndex < 0 || axisIndex > 6) return false;
+			if (axisIndex < 0 || axisIndex > 8) return false;
 			CarbonAxis axis = axisMapping[axisIndex];
 			publish(axis, value);
 			return false;

@@ -32,5 +32,13 @@ public enum CarbonAxis {
 	 * Right trigger. Typically an analog shoulder button. The axis value should be in range [0, 1], where 0 is not pressed and 1 is fully
 	 * pressed.
 	 */
-	RT
+	RT,
+	/**
+	 * Z axis of the left analog stick. Often not supported. The axis value should be in range [-1, 1], where -1 is up and +1 is down.
+	 */
+	LZ,
+	/**
+	 * Z axis of the right analog stick. Often not supported. The axis value should be in range [-1, 1], where -1 is up and +1 is down.
+	 */
+	RZ
 }

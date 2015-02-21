@@ -87,6 +87,7 @@ public class IpegaPC implements WrapperFactory {
 		}
 		@Override
 		public boolean supports(CarbonAxis axis) {
+			if (axis == CarbonAxis.LZ || axis == CarbonAxis.RZ) return false;
 			return true;
 		}
 		@Override

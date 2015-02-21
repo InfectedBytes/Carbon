@@ -7,16 +7,16 @@ import com.infectedbytes.carbon.controllers.CarbonController;
 import com.infectedbytes.carbon.controllers.CarbonKey;
 
 /**
- * Factory for XBox360 controllers.
+ * Wrapper for SpaceMouse Pro 3D mouse. It's not a real controller, but with it's six axes it might be useful.
  * 
  * @author Henrik
  *
  */
-public class XBox360 implements WrapperFactory {
+public class SpaceMousePro implements WrapperFactory {
 
 	@Override
 	public boolean canWrap(String name) {
-		return name.toLowerCase().contains("xbox") && name.contains("360");
+		return name.contains("SpaceMouse Pro") && !name.contains("Receiver");
 	}
 
 	@Override
@@ -25,13 +25,10 @@ public class XBox360 implements WrapperFactory {
 	}
 
 	private static class Wrapper extends ControllerWrapper {
-		private CarbonKey[] keyMapping = new CarbonKey[] {
-				CarbonKey.A, CarbonKey.B, CarbonKey.X, CarbonKey.Y, CarbonKey.L1, CarbonKey.R1,
-				CarbonKey.BACK, CarbonKey.START, CarbonKey.L3, CarbonKey.R3};
-		private CarbonAxis[] axisMapping = new CarbonAxis[] {CarbonAxis.LY, CarbonAxis.LX, CarbonAxis.RY, CarbonAxis.RX};// special handling
-																															// for trigger
-
-		private float lastTrigger;
+		private CarbonKey[] keyMapping = new CarbonKey[] {CarbonKey.START, CarbonKey.R2, null, null, null, null,
+				CarbonKey.X, CarbonKey.Y, CarbonKey.B, CarbonKey.A, CarbonKey.BACK, CarbonKey.L1,
+				CarbonKey.L2, CarbonKey.L3, CarbonKey.R1};
+		private CarbonAxis[] axisMapping = new CarbonAxis[] {CarbonAxis.RX, CarbonAxis.RZ, CarbonAxis.RY, CarbonAxis.LZ, CarbonAxis.LY, CarbonAxis.LX};
 
 		public Wrapper(Controller controller) {
 			super(controller);
@@ -43,49 +40,45 @@ public class XBox360 implements WrapperFactory {
 		}
 		@Override
 		public boolean buttonDown(Controller controller, int buttonCode) {
-			if (buttonCode < 0 || buttonCode > 9) return false;
+			if (buttonCode < 0 || buttonCode > 14) return false;
+			if (buttonCode >= 2 && buttonCode <= 5) {
+				switch (buttonCode) {
+					case 2:
+						publish(PovDirection.north);
+						break;
+					case 3:
+						publish(PovDirection.east);
+						break;
+					case 4:
+						publish(PovDirection.south);
+						break;
+					case 5:
+						publish(PovDirection.west);
+						break;
+				}
+				return false;
+			}
 			CarbonKey key = keyMapping[buttonCode];
 			publish(key, true);
 			return super.buttonDown(controller, buttonCode);
 		}
 		@Override
 		public boolean buttonUp(Controller controller, int buttonCode) {
-			if (buttonCode < 0 || buttonCode > 9) return false;
+			if (buttonCode < 0 || buttonCode > 14) return false;
+			if (buttonCode >= 2 && buttonCode <= 5) {
+				publish(PovDirection.center);
+				return false;
+			}
 			CarbonKey key = keyMapping[buttonCode];
 			publish(key, false);
 			return super.buttonDown(controller, buttonCode);
 		}
 		@Override
 		public boolean axisMoved(Controller controller, int axisIndex, float value) {
-			if (axisIndex < 0 || axisIndex > 4) return false;
-			CarbonAxis axis;
-			if (axisIndex < 4) {
-				axis = axisMapping[axisIndex];
-				publish(axis, value);
-			} else {
-				float lt, rt;
-				if (value >= 0f) {
-					lt = value;
-					rt = 0f;
-				} else {
-					lt = 0f;
-					rt = -value;
-				}
-				publish(CarbonAxis.LT, lt);
-				publish(CarbonAxis.RT, rt);
-
-				if (lastTrigger > 0.5f && value <= 0.5f) {
-					publish(CarbonKey.L2, false);
-				} else if (lastTrigger < -0.5f && value >= -0.5f) {
-					publish(CarbonKey.R2, false);
-				}
-				if (lastTrigger <= 0.5f && value > 0.5f) {
-					publish(CarbonKey.L2, true);
-				} else if (lastTrigger >= -0.5f && value < -0.5f) {
-					publish(CarbonKey.R2, true);
-				}
-				lastTrigger = value;
-			}
+			if (axisIndex < 0 || axisIndex > 5) return false;
+			CarbonAxis axis = axisMapping[axisIndex];
+			if (axis == CarbonAxis.RZ) value = -value;
+			publish(axis, value);
 			return false;
 		}
 		@Override
@@ -97,11 +90,12 @@ public class XBox360 implements WrapperFactory {
 		}
 		@Override
 		public boolean supports(CarbonAxis axis) {
-			if (axis == CarbonAxis.LZ || axis == CarbonAxis.RZ) return false;
+			if (axis == CarbonAxis.LT || axis == CarbonAxis.RT) return false;
 			return true;
 		}
 		@Override
 		public boolean supports(CarbonKey key) {
+			if (key == CarbonKey.R3) return false;
 			return true;
 		}
 		@Override
